@@ -24,6 +24,11 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "address",
     header: "Address",
+    cell: ({ row }) => (
+      <div className="text-left line-clamp-2 min-w-[200px] max-w-xs">
+        {row.original.address}
+      </div>
+    ),
   },
   {
     accessorKey: "totalPrice",
