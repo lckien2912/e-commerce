@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { Size } from "@prisma/client";
+import { Plate } from "@prisma/client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,45 +26,45 @@ import AlertModal from "@/components/modals/alert-modal";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  value: z.string().min(1),
+  material: z.string().min(1),
 });
 
-interface SizeFormProps {
-  initialData: Size | null;
+interface PlateFormProps {
+  initialData: Plate | null;
 }
 
-type SizeFormValues = z.infer<typeof formSchema>;
+type PlateFormValues = z.infer<typeof formSchema>;
 
-const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
+const PlateForm: React.FC<PlateFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit size" : "Create size";
-  const description = initialData ? "Edit a size" : "Add a new size";
-  const toastMsg = initialData ? "Size updated" : "Size created";
+  const title = initialData ? "Edit plate" : "Create plate";
+  const description = initialData ? "Edit a plate" : "Add a new plate";
+  const toastMsg = initialData ? "Plate updated" : "Plate created";
   const action = initialData ? "Save changes" : "Create";
 
-  const form = useForm<SizeFormValues>({
+  const form = useForm<PlateFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || { name: "", value: "" },
+    defaultValues: initialData || { name: "", material: "" },
   });
 
-  const onSubmit = async (data: SizeFormValues) => {
+  const onSubmit = async (data: PlateFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/sizes/${params.sizeId}`,
+          `/api/${params.storeId}/plates/${params.plateId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/sizes`, data);
+        await axios.post(`/api/${params.storeId}/plates`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
+      router.push(`/${params.storeId}/plates`);
       toast({ description: toastMsg });
     } catch (error) {
       toast({
@@ -79,16 +79,16 @@ const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`);
+      await axios.delete(`/api/${params.storeId}/plates/${params.plateId}`);
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
-      toast({ description: "Size deleted." });
+      router.push(`/${params.storeId}/plates`);
+      toast({ description: "Plate deleted." });
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Warning",
         description:
-          "Make sure you removed all products using this size first.",
+          "Make sure you removed all products using this plate first.",
       });
     } finally {
       setLoading(false);
@@ -133,7 +133,7 @@ const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Size name"
+                      placeholder="Plate name"
                       {...field}
                     />
                   </FormControl>
@@ -143,16 +143,18 @@ const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
             />
             <FormField
               control={form.control}
-              name="value"
+              name="material"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Value</FormLabel>
+                  <FormLabel>Material</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Size value"
-                      {...field}
-                    />
+                    <div className="flex items-center gap-x-4">
+                      <Input
+                        disabled={loading}
+                        placeholder="Plate material"
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -169,4 +171,4 @@ const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   );
 };
 
-export default SizeForm;
+export default PlateForm;

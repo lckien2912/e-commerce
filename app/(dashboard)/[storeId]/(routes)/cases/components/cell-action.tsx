@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { SizeColumn } from "./columns";
+import { CaseColumn } from "./columns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,7 @@ import { toast } from "@/components/ui/use-toast";
 import AlertModal from "@/components/modals/alert-modal";
 
 interface CellActionProps {
-  data: SizeColumn;
+  data: CaseColumn;
 }
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -30,23 +30,23 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast({ description: "Size ID copied to the clipboard" });
+    toast({ description: "Case ID copied to the clipboard" });
   };
 
-  const onUpdate = () => router.push(`/${params.storeId}/sizes/${data.id}`);
+  const onUpdate = () => router.push(`/${params.storeId}/cases/${data.id}`);
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/cases/${data.id}`);
       router.refresh();
-      toast({ description: "Size deleted." });
+      toast({ description: "Case deleted." });
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Warning",
         description:
-          "Make sure you removed all products using this size first.",
+          "Make sure you removed all products using this case first.",
       });
     } finally {
       setLoading(false);

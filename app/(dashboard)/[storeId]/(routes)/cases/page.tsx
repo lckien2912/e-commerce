@@ -1,29 +1,29 @@
 import { format } from "date-fns";
 import prismadb from "@/lib/prismadb";
 
-import SizeClient from "./components/size-client";
-import { SizeColumn } from "./components/columns";
+import CaseClient from "./components/case-client";
+import { CaseColumn } from "./components/columns";
 
-const SizesPage = async ({ params }: { params: { storeId: string } }) => {
-  const sizes = await prismadb.size.findMany({
+const CasesPage = async ({ params }: { params: { storeId: string } }) => {
+  const cases = await prismadb.case.findMany({
     where: { storeId: params.storeId },
     orderBy: { createdAt: "desc" },
   });
 
-  const formattedSizes: SizeColumn[] = sizes.map((item) => ({
+  const formattedCases: CaseColumn[] = cases.map((item) => ({
     id: item.id,
     name: item.name,
-    value: item.value,
+    material: item.material,
     createdAt: format(item.createdAt, "dd/MM/yyyy"),
   }));
 
   return (
     <div className="flex flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <SizeClient data={formattedSizes} />
+        <CaseClient data={formattedCases} />
       </div>
     </div>
   );
 };
 
-export default SizesPage;
+export default CasesPage;

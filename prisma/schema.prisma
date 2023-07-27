@@ -16,7 +16,8 @@ model Store {
   userId String
   billboards Billboard[] @relation("StoreToBillboard")
   categories Category[] @relation("StoreToCategory")
-  size Size[] @relation("StoreToSize")
+  plate Plate[] @relation("StoreToPlate")
+  case Case[] @relation("StoreToCase")
   color Color[] @relation("StoreToColor")
   products Product[] @relation("StoreToProduct")
   order Order[] @relation("StoreToOrder")
@@ -52,13 +53,26 @@ model Category {
   @@index([billboardId])
 }
 
-model Size {
+model Plate {
   id String @id @default(uuid())
   storeId String
-  store Store @relation("StoreToSize", fields: [storeId], references: [id])
-  products Product[] @relation("SizeToProduct")
+  store Store @relation("StoreToPlate", fields: [storeId], references: [id])
+  products Product[] @relation("PlateToProduct")
   name String
-  value String
+  material String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+model Case {
+  id String @id @default(uuid())
+  storeId String
+  store Store @relation("StoreToCase", fields: [storeId], references: [id])
+  products Product[] @relation("CaseToProduct")
+  name String
+  material String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -84,8 +98,10 @@ model Product {
   store Store @relation("StoreToProduct", fields: [storeId], references: [id])
   categoryId String
   category Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  sizeId String
-  size Size @relation("SizeToProduct", fields: [sizeId], references: [id])
+  plateId String
+  plate Plate @relation("PlateToProduct", fields: [plateId], references: [id])
+  caseId String
+  case Case @relation("CaseToProduct", fields: [caseId], references: [id])
   colorId String
   color Color @relation("ColorToProduct", fields: [colorId], references: [id])
   name String
@@ -99,7 +115,8 @@ model Product {
 
   @@index([storeId])
   @@index([categoryId])
-  @@index([sizeId])
+  @@index([plateId])
+  @@index([caseId])
   @@index([colorId])
 }
 

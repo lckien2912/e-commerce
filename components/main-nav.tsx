@@ -31,9 +31,14 @@ const MainNav: React.FC<MainNavProps> = ({ className, onOpenChange }) => {
       active: pathname === `/${params.storeId}/categories`,
     },
     {
-      href: `/${params.storeId}/sizes`,
-      label: "Sizes",
-      active: pathname === `/${params.storeId}/sizes`,
+      href: `/${params.storeId}/cases`,
+      label: "Cases",
+      active: pathname === `/${params.storeId}/cases`,
+    },
+    {
+      href: `/${params.storeId}/plates`,
+      label: "Plates",
+      active: pathname === `/${params.storeId}/plates`,
     },
     {
       href: `/${params.storeId}/colors`,
@@ -60,7 +65,7 @@ const MainNav: React.FC<MainNavProps> = ({ className, onOpenChange }) => {
   return (
     <nav
       className={cn(
-        "hidden lg:flex items-center space-x-4 lg:space-x-6",
+        "hidden lg:flex items-center space-x-4 xl:space-x-6",
         className
       )}
     >

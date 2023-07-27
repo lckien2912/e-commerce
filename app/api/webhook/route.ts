@@ -60,9 +60,7 @@ export async function POST(req: Request) {
           in: [...productIds],
         },
       },
-      data: {
-        isArchived: true,
-      },
+      data: {},
     });
   }
 

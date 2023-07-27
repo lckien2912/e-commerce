@@ -16,7 +16,8 @@ export async function GET(
         images: true,
         category: true,
         color: true,
-        size: true,
+        case: true,
+        plate: true,
       },
     });
 
@@ -41,7 +42,8 @@ export async function PATCH(
       price,
       images,
       categoryId,
-      sizeId,
+      caseId,
+      plateId,
       colorId,
       isFeatured,
       isArchived,
@@ -67,8 +69,12 @@ export async function PATCH(
       return new NextResponse("Category is required", { status: 400 });
     }
 
-    if (!sizeId) {
-      return new NextResponse("Size is required", { status: 400 });
+    if (!caseId) {
+      return new NextResponse("Case is required", { status: 400 });
+    }
+
+    if (!plateId) {
+      return new NextResponse("Plate is required", { status: 400 });
     }
 
     if (!colorId) {
@@ -95,7 +101,8 @@ export async function PATCH(
           deleteMany: {},
         },
         categoryId,
-        sizeId,
+        caseId,
+        plateId,
         colorId,
         isFeatured,
         isArchived,

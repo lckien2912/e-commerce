@@ -14,7 +14,8 @@ export async function POST(
       price,
       images,
       categoryId,
-      sizeId,
+      caseId,
+      plateId,
       colorId,
       isFeatured,
       isArchived,
@@ -40,8 +41,12 @@ export async function POST(
       return new NextResponse("Category is required", { status: 400 });
     }
 
-    if (!sizeId) {
-      return new NextResponse("Size is required", { status: 400 });
+    if (!caseId) {
+      return new NextResponse("Case is required", { status: 400 });
+    }
+
+    if (!plateId) {
+      return new NextResponse("Plate is required", { status: 400 });
     }
 
     if (!colorId) {
@@ -69,7 +74,8 @@ export async function POST(
           },
         },
         categoryId,
-        sizeId,
+        caseId,
+        plateId,
         colorId,
         isFeatured,
         isArchived,
@@ -92,7 +98,8 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const categoryId = searchParams.get("categoryId") || undefined;
     const colorId = searchParams.get("colorId") || undefined;
-    const sizeId = searchParams.get("sizeId") || undefined;
+    const caseId = searchParams.get("caseId") || undefined;
+    const plateId = searchParams.get("plateId") || undefined;
     const isFeatured = searchParams.get("isFeatured");
 
     if (!params.storeId) {
@@ -104,7 +111,8 @@ export async function GET(
         storeId: params.storeId,
         categoryId,
         colorId,
-        sizeId,
+        caseId,
+        plateId,
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
       },
@@ -112,7 +120,8 @@ export async function GET(
         images: true,
         category: true,
         color: true,
-        size: true,
+        case: true,
+        plate: true,
       },
       orderBy: { createdAt: "desc" },
     });

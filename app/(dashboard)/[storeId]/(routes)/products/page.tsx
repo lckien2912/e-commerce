@@ -8,7 +8,7 @@ import { priceFormatter } from "@/lib/utils";
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
     where: { storeId: params.storeId },
-    include: { category: true, size: true, color: true },
+    include: { category: true, case: true, plate: true, color: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -19,7 +19,8 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     isArchived: item.isArchived,
     price: priceFormatter.format(item.price.toNumber()),
     category: item.category.name,
-    size: item.size.name,
+    case: item.case.name,
+    plate: item.plate.name,
     color: item.color.value,
     createdAt: format(item.createdAt, "dd/MM/yyyy"),
   }));
