@@ -5,10 +5,12 @@ import { usePathname, useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const MainNav = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) => {
+interface MainNavProps {
+  className?: string;
+  onOpenChange?: () => void;
+}
+
+const MainNav: React.FC<MainNavProps> = ({ className, onOpenChange }) => {
   const pathname = usePathname();
   const params = useParams();
 
@@ -56,17 +58,23 @@ const MainNav = ({
   ];
 
   return (
-    <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
+    <nav
+      className={cn(
+        "hidden lg:flex items-center space-x-4 lg:space-x-6",
+        className
+      )}
+    >
       {routes.map(({ href, label, active }) => (
         <Link
           key={href}
           href={href}
-          className={
-            (cn("text-sm font-medium transition-colors hover:text-primary"),
+          className={cn(
+            "text-md font-medium transition-colors hover:text-primary",
             active
               ? "text-black dark:text-white font-semibold"
-              : " text-muted-foreground")
-          }
+              : " text-muted-foreground"
+          )}
+          onClick={onOpenChange}
         >
           {label}
         </Link>

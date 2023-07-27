@@ -123,7 +123,7 @@ const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
             <FormField
               control={form.control}
               name="name"
