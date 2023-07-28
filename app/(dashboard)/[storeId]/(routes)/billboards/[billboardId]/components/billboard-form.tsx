@@ -27,7 +27,7 @@ import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
   label: z.string().min(6),
-  imageUrl: z.string().min(6),
+  imageUrl: z.string().min(1, "Must contain at least an image!"),
 });
 
 interface BillboardFormProps {

@@ -25,8 +25,6 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
-  console.log(data);
-
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 

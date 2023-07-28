@@ -32,8 +32,8 @@ import {
 } from "@/components/ui/select";
 
 const formSchema = z.object({
-  name: z.string().min(6),
-  billboardId: z.string().min(6),
+  name: z.string().min(1),
+  billboardId: z.string().min(1, "Must select a billboard!"),
 });
 
 interface CategoryFormProps {

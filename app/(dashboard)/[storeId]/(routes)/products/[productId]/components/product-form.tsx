@@ -38,10 +38,10 @@ const formSchema = z.object({
   name: z.string().min(6),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number(),
-  categoryId: z.string().min(1),
-  caseId: z.string().min(1),
-  plateId: z.string().min(1),
-  colorId: z.string().min(1),
+  categoryId: z.string().min(1, "Must select a category!"),
+  caseId: z.string().min(1, "Must select a case!"),
+  plateId: z.string().min(1, "Must select a plate!"),
+  colorId: z.string().min(1, "Must select a color!"),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });
@@ -92,7 +92,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    console.log(data);
     try {
       setLoading(true);
       if (initialData) {
